@@ -234,7 +234,10 @@ func appiumSwipe(device *models.Device, x, y, endX, endY float64) (*http.Respons
 }
 
 func appiumSource(device *models.Device) (*http.Response, error) {
-	return appiumRequest(device, http.MethodGet, "source", nil)
+	if device.OS == "android" {
+		return appiumRequest(device, http.MethodGet, "source", nil)
+	}
+	return wdaRequest(device, http.MethodGet, "source", nil)
 }
 
 func appiumScreenshot(device *models.Device) (*http.Response, error) {
